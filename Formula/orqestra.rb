@@ -1,17 +1,19 @@
 class Orqestra < Formula
   desc "AI-powered SDLC orchestration CLI"
   homepage "https://orqestra.work"
-  version "0.9.30"
+  version "0.9.32"
 
   on_macos do
     on_arm do
-      url "https://github.com/orqestraai/orqestra-releases/releases/download/v0.9.30/orqestra-macos-arm64"
-      sha256 "f403797c13c2a3d17adcabd3fce13e8c7a7a5519b6575bf644f09ab0b23ab971"
+      url "https://github.com/orqestraai/orqestra-releases/releases/download/v0.9.32/orqestra-macos-arm64.tar.gz"
+      sha256 "c801260bfcbb4bb4299393242f23b53d8014e7e6626630077afd939959b0ab23"
     end
   end
 
   def install
-    bin.install "orqestra-macos-arm64" => "orqestra"
+    # Homebrew unpack flattens the single top-level `orqestra/` dir from the tarball.
+    (libexec/"orqestra").install "_internal", "orqestra"
+    bin.install_symlink libexec/"orqestra"/"orqestra" => "orqestra"
   end
 
   def caveats
